@@ -1,0 +1,17 @@
+{
+  "name": "usersystem",
+  "version": "1.0.0",
+  "description": "Development project for a user system aiming at a secure authentication system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
