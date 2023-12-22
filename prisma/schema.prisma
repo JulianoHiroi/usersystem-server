@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id            Int           @id @default(autoincrement())
+  id            String        @id @default(uuid())
   email         String        @unique
   name          String
   date_of_birth DateTime
@@ -21,16 +21,16 @@ model User {
 }
 
 model Project {
-  id   Int           @id @default(autoincrement())
+  id   String        @id @default(uuid())
   name String
   role String
   user UserProject[]
 }
 
 model UserProject {
-  userId    Int
+  userId    String
   autor     User    @relation(fields: [userId], references: [id])
-  projectId Int
+  projectId String
   livro     Project @relation(fields: [projectId], references: [id])
   role      String
 
