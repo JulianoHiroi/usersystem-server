@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { UserError } from "../../modules/users/errors/user.errors";
+import { UserError } from "../../domain/modules/users/errors/user.errors";
 
 export const errorMiddleware = (
   error: Error & Partial<UserError>,
