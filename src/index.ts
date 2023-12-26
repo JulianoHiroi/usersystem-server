@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 import { errorMiddleware } from "./polices/error/error.middleware";
+import routes from "./routes";
 
 prisma.$connect().then(() => {
   console.log("Connected to database");
@@ -14,6 +15,7 @@ prisma.$connect().then(() => {
     res.send("Hello World");
   });
   // Este middleware será chamado antes do middleware de erro
+  app.use(routes);
   app.use(errorMiddleware);
   app.listen(3000, () => {
     console.log("Server is running on port 3000");

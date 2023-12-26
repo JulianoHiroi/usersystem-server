@@ -13,15 +13,17 @@ type createUserProps = {
   date_of_birth: string;
   gender: string;
 };
-export class SigninUseCase {
+export class SignUpUseCase {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly tokenService: TokenService,
     private readonly hashService: HashService
   ) {}
 
-  async execute(data: createUserProps) {
-    const userAlreadyExists = await this.userRepository.findUser(data.email);
+  async execute(data: CreateUserDTO): Promise<string> {
+    const userAlreadyExists = await this.userRepository.findUser({
+      email: data.email,
+    });
 
     if (userAlreadyExists) {
       throw new UserError("alreadyExists");

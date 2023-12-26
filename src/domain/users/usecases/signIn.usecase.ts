@@ -15,8 +15,8 @@ export class SigninUseCase {
     private readonly tokenService: TokenService
   ) {}
 
-  async execute(data: SigninProps) {
-    const user = await this.userRepository.findUser(data.email);
+  async execute(data: SigninProps): Promise<string> {
+    const user = await this.userRepository.findUser({ email: data.email });
 
     if (!user) {
       throw new UserError("notFound");
@@ -30,6 +30,6 @@ export class SigninUseCase {
       throw new UserError("invalidCredentials");
     }
     const token = this.tokenService.sign({ id: user.id }, { expiresIn: "1d" });
-    return { token };
+    return token;
   }
 }

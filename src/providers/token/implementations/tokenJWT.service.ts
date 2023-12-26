@@ -2,7 +2,7 @@ import { TokenError } from "../errors/token.error";
 import jwt from "jsonwebtoken";
 import { generateTokenOptions, TokenService } from "../token.service";
 
-export class tokenServiceJWT implements TokenService {
+export class TokenServiceJWT implements TokenService {
   public sign(payload: object, { expiresIn }: generateTokenOptions) {
     if (!process.env.SECRET) {
       throw new TokenError("EmptySecret");

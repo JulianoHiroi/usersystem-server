@@ -8,7 +8,7 @@ export class DeleteUserUseCase {
     this.userRepository = userRepository;
   }
   async execute(id: string) {
-    const user = await this.userRepository.findUser(id);
+    const user = await this.userRepository.findUser({ id: id });
     if (!user) {
       throw new UserError("notFound");
     }

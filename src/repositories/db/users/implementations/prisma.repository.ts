@@ -1,4 +1,7 @@
-import { updateUserDTO } from "../../../../domain/users/@types/userDTO";
+import {
+  FindUserDTO,
+  updateUserDTO,
+} from "../../../../domain/users/@types/userDTO";
 import { UserRepository } from "../user.repository";
 
 import { PrismaClient, User } from "@prisma/client";
@@ -10,11 +13,11 @@ export class PrismaRepository implements UserRepository {
     const user = await prisma.user.create({ data });
     return user;
   }
-  async findUser(email?: string, id?: string): Promise<User | null> {
+  async findUser(findUserDTO: FindUserDTO): Promise<User | null> {
     const user = await prisma.user.findUnique({
       where: {
-        email,
-        id,
+        email: findUserDTO.email,
+        id: findUserDTO.id,
       },
       include: {
         projects: true,

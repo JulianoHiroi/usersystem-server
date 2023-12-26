@@ -25,7 +25,7 @@ export class UserMapper {
         name: data.name,
         email: data.email,
         password: data.password,
-        date_of_birth: data.date_of_birth.toString(),
+        date_of_birth: data.date_of_birth,
         gender: data.gender,
       },
       data.id
