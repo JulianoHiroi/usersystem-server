@@ -1,14 +1,14 @@
-import { UserError } from "../errors/user.errors";
-import { UserRepository } from "../../../repositories/db/users/user.repository";
-import { HashService } from "../../../providers/hash/hash.service";
-import { TokenService } from "../../../providers/token/token.service";
+import UserError from "../errors/user.errors";
+import UserRepository from "../../../repositories/db/users/user.repository";
+import HashService from "../../../providers/hash/hash.service";
+import TokenService from "../../../providers/token/token.service";
 
 type SigninProps = {
   email: string;
   password: string;
 };
 
-export class SigninUseCase {
+class SigninUseCase {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly hashService: HashService,
@@ -33,3 +33,4 @@ export class SigninUseCase {
     return token;
   }
 }
+export default SigninUseCase;

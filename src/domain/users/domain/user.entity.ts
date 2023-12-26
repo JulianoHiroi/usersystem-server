@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { UserError } from "../errors/user.errors";
+import UserError from "../errors/user.errors";
 
 export type projectsProps = { role: string; project: string }[];
 

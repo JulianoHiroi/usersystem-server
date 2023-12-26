@@ -47,7 +47,7 @@ const schemaError = {
     message: "Invalid credentials",
   },
 };
-export class UserError extends Error {
+class UserError extends Error {
   public readonly nameError: nameUserError;
   public readonly statusCode: number;
   constructor(nameError: nameUserError) {
@@ -56,3 +56,4 @@ export class UserError extends Error {
     this.statusCode = schemaError[nameError].statusCode;
   }
 }
+export default UserError;

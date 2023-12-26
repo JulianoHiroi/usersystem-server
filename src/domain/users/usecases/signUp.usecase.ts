@@ -1,10 +1,10 @@
 import { CreateUserDTO } from "../@types/userDTO";
-import { UserRepository } from "../../../repositories/db/users/user.repository";
+import UserRepository from "../../../repositories/db/users/user.repository";
 import User from "../domain/user.entity";
-import { UserMapper } from "../mappers/user.mapper";
-import { UserError } from "../errors/user.errors";
-import { TokenService } from "../../../providers/token/token.service";
-import { HashService } from "../../../providers/hash/hash.service";
+import UserMapper from "../mappers/user.mapper";
+import UserError from "../errors/user.errors";
+import TokenService from "../../../providers/token/token.service";
+import HashService from "../../../providers/hash/hash.service";
 
 type createUserProps = {
   name: string;
@@ -13,7 +13,7 @@ type createUserProps = {
   date_of_birth: string;
   gender: string;
 };
-export class SignUpUseCase {
+class SignUpUseCase {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly tokenService: TokenService,
@@ -43,3 +43,4 @@ export class SignUpUseCase {
     return token;
   }
 }
+export default SignUpUseCase;

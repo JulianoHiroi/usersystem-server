@@ -1,8 +1,8 @@
-import { HashService } from "../hash.service";
+import HashService from "../hash.service";
 import bcrypt from "bcrypt";
 import { HashError } from "../errors/hash.error";
 
-export class HashServiceBcrypt implements HashService {
+class HashServiceBcrypt implements HashService {
   public hash(password: string): string {
     if (!process.env.SALT_ROUNDS) {
       throw new HashError("EmptySaltRounds");
@@ -16,3 +16,5 @@ export class HashServiceBcrypt implements HashService {
     return isValid;
   }
 }
+
+export default HashServiceBcrypt;

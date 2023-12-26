@@ -8,7 +8,7 @@ type userPropsMapper = {
   gender: string;
   date_of_birth: Date;
 };
-export class UserMapper {
+class UserMapper {
   static toPersist(user: User) {
     return {
       id: user.id,
@@ -32,3 +32,4 @@ export class UserMapper {
     );
   }
 }
+export default UserMapper;

@@ -1,7 +1,7 @@
-import { UserError } from "../errors/user.errors";
-import { UserRepository } from "../../../repositories/db/users/user.repository";
+import UserError from "../errors/user.errors";
+import UserRepository from "../../../repositories/db/users/user.repository";
 
-export class DeleteUserUseCase {
+class DeleteUserUseCase {
   private readonly userRepository: UserRepository;
 
   constructor(userRepository: UserRepository) {
@@ -15,3 +15,4 @@ export class DeleteUserUseCase {
     await this.userRepository.deleteUser(id);
   }
 }
+export default DeleteUserUseCase;

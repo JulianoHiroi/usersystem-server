@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { UserService } from "../../domain/users/ports/Input/user.service";
+import UserService from "../../domain/users/ports/Input/user.service";
 
-export class UserController {
+class UserController {
   constructor(private readonly userService: UserService) {}
 
   async getUser(request: Request, response: Response) {
@@ -40,3 +40,4 @@ export class UserController {
     return response.status(204).json();
   }
 }
+export default UserController;

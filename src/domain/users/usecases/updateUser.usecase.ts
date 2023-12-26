@@ -1,7 +1,7 @@
 import { updateUserDTO } from "../@types/userDTO";
-import { UserError } from "../errors/user.errors";
-import { UserMapper } from "../mappers/user.mapper";
-import { UserRepository } from "../../../repositories/db/users/user.repository";
+import UserError from "../errors/user.errors";
+import UserMapper from "../mappers/user.mapper";
+import UserRepository from "../../../repositories/db/users/user.repository";
 
 type updatedUserProps = {
   id: string;
@@ -44,3 +44,4 @@ export class UpdateUserUseCase {
     return updatedUser;
   }
 }
+export default UpdateUserUseCase;
