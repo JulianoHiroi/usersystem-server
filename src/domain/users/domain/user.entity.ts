@@ -27,12 +27,6 @@ class User {
     this.id = id || randomUUID();
   }
   // faça uma fução de validação de senha que tenha no mínimo 6 caracteres e que tenha pelo menos uma letra maiuscula e minuscula, um número e um caracter especial
-  public validatePassword() {
-    const { password } = this.data;
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
-    return regex.test(password);
-  }
   public validateEmail() {
     const { email } = this.data;
     const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -63,9 +57,6 @@ class User {
     }
     if (!this.validateEmail()) {
       throw new UserError("invalidEmail");
-    }
-    if (!this.validatePassword()) {
-      throw new UserError("invalidPassword");
     }
     return true;
   };

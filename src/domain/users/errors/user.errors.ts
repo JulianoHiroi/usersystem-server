@@ -1,11 +1,13 @@
-type nameError =
+type nameUserError =
   | "notFound"
   | "invalidPassword"
   | "invalidEmail"
   | "emptyName"
   | "invalidDateBirth"
   | "emptyGender"
-  | "alreadyExists";
+  | "alreadyExists"
+  | "invalidToken"
+  | "invalidCredentials";
 
 const schemaError = {
   notFound: {
@@ -36,14 +38,21 @@ const schemaError = {
     statusCode: 400,
     message: "User already exists",
   },
+  invalidToken: {
+    statusCode: 401,
+    message: "Invalid token",
+  },
+  invalidCredentials: {
+    statusCode: 401,
+    message: "Invalid credentials",
+  },
 };
 export class UserError extends Error {
-  public readonly nameError: nameError;
+  public readonly nameError: nameUserError;
   public readonly statusCode: number;
-  constructor(nameError: nameError) {
+  constructor(nameError: nameUserError) {
     super(schemaError[nameError].message);
     this.nameError = nameError;
     this.statusCode = schemaError[nameError].statusCode;
-    console.log(this.statusCode);
   }
 }
