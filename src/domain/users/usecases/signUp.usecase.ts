@@ -1,13 +1,20 @@
 import { CreateUserDTO } from "../@types/userDTO";
-import { UserRepository } from "../repository/user.repository";
+import { UserRepository } from "../../../repositories/db/users/user.repository";
 import User from "../domain/user.entity";
 import { UserMapper } from "../mappers/user.mapper";
 import { UserError } from "../errors/user.errors";
 
-export class CreateUserUseCase {
+type createUserProps = {
+  name: string;
+  email: string;
+  password: string;
+  date_of_birth: string;
+  gender: string;
+};
+export class SigninUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async execute(data: CreateUserDTO) {
+  async execute(data: createUserProps) {
     const userAlreadyExists = await this.userRepository.findUser(data.email);
 
     if (userAlreadyExists) {
