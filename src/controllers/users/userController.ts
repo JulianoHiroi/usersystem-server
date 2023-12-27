@@ -7,9 +7,11 @@ class UserController {
   async getUser(request: Request, response: Response) {
     const { id } = request.params;
     if (!id) return response.status(400).json({ error: "id is required" });
+
     const user = await this.userService.getUser(id);
     return response.status(200).json(user);
   }
+
   async signIn(request: Request, response: Response) {
     const { email, password } = request.body;
     const token = await this.userService.signIn({ email, password });
@@ -36,6 +38,7 @@ class UserController {
   }
   async deleteUser(request: Request, response: Response) {
     const { id } = request.params;
+    console.log(this.userService);
     await this.userService.deleteUser(id);
     return response.status(204).json();
   }

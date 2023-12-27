@@ -16,8 +16,8 @@ type createUserProps = {
 class SignUpUseCase {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly tokenService: TokenService,
-    private readonly hashService: HashService
+    private readonly hashService: HashService,
+    private readonly tokenService: TokenService
   ) {}
 
   async execute(data: CreateUserDTO): Promise<string> {

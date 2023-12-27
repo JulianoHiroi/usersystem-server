@@ -1,3 +1,6 @@
+import PrismaRepository from "../../../../../repositories/db/users/implementations/prisma.repository";
+import TokenServiceJWT from "../../../../../providers/token/implementations/tokenJWT.service";
+import HashServiceBcrypt from "../../../../../providers/hash/implementations/hashBcrypt.service";
 import { getUserResponseDTO } from "../../../@types/userDTO";
 import DeleteUserUseCase from "../../../usecases/deleteUser.usecase";
 import GetUserUseCase from "../../../usecases/getUser.usecase";
@@ -6,14 +9,28 @@ import SignUpUseCase from "../../../usecases/signUp.usecase";
 import UpdateUserUseCase from "../../../usecases/updateUser.usecase";
 import UserService from "../user.service";
 
+const userRepository = new PrismaRepository();
+const hashServiceBcrypt = new HashServiceBcrypt();
+const tokenServiceJWT = new TokenServiceJWT();
 class UserDomainService implements UserService {
-  constructor(
-    private readonly getUserUseCase: GetUserUseCase,
-    private readonly updateUserUseCase: UpdateUserUseCase,
-    private readonly deleteUserUseCase: DeleteUserUseCase,
-    private readonly signInUseCase: SigninUseCase,
-    private readonly signUpUseCase: SignUpUseCase
-  ) {}
+  private getUserUseCase: GetUserUseCase = new GetUserUseCase(userRepository);
+  private updateUserUseCase: UpdateUserUseCase = new UpdateUserUseCase(
+    userRepository
+  );
+  private deleteUserUseCase: DeleteUserUseCase = new DeleteUserUseCase(
+    userRepository
+  );
+  private signInUseCase: SigninUseCase = new SigninUseCase(
+    userRepository,
+    hashServiceBcrypt,
+    tokenServiceJWT
+  );
+  private signUpUseCase: SignUpUseCase = new SignUpUseCase(
+    userRepository,
+    hashServiceBcrypt,
+    tokenServiceJWT
+  );
+
   async getUser(id: string): Promise<getUserResponseDTO> {
     const user = await this.getUserUseCase.execute(id);
     return user;
