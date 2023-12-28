@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import UserService from "../../domain/users/ports/Input/user.service";
+import UserService from "../modules/users/service/user.service";
 
 class UserController {
   constructor(private readonly userService: UserService) {}
@@ -10,6 +10,11 @@ class UserController {
 
     const user = await this.userService.getUser(id);
     return response.status(200).json(user);
+  }
+  async getAllUsers(request: Request, response: Response) {
+    const users = await this.userService.getAllUsers();
+
+    return response.status(200).json(users);
   }
 
   async signIn(request: Request, response: Response) {
@@ -24,7 +29,7 @@ class UserController {
       email: email,
       password: password,
       gender: gender,
-      date_of_birth: date_of_birth,
+      date_of_birth: new Date(date_of_birth),
     });
 
     // Adicionar esta linha para enviar o token na resposta
@@ -33,8 +38,13 @@ class UserController {
   async updateUser(request: Request, response: Response) {
     const { id } = request.params;
     const { name, email, password } = request.body;
-    await this.userService.updateUser({ id, name, email, password });
-    return response.status(204).json();
+    const updateUser = await this.userService.updateUser({
+      id,
+      name,
+      email,
+      password,
+    });
+    return response.status(200).json(updateUser);
   }
   async deleteUser(request: Request, response: Response) {
     const { id } = request.params;

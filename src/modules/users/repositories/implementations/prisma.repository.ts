@@ -1,7 +1,4 @@
-import {
-  FindUserDTO,
-  updateUserDTO,
-} from "../../../../domain/users/@types/userDTO";
+import { FindUserDTO, updateUserDTO } from "../../@types/userDTO";
 import UserRepository from "../user.repository";
 
 import { PrismaClient, User } from "@prisma/client";
@@ -43,6 +40,10 @@ class PrismaRepository implements UserRepository {
       data,
     });
     return user;
+  }
+  async findAll(): Promise<User[]> {
+    const users = await prisma.user.findMany({ include: { projects: true } });
+    return users;
   }
 }
 

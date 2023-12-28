@@ -1,9 +1,13 @@
-type NameTokenError = "EmptySecret";
+type NameTokenError = "EmptySecret" | "InvalidToken";
 
 const schemaTokenError = {
   EmptySecret: {
     statusCode: 500,
     message: "Empty secret",
+  },
+  InvalidToken: {
+    statusCode: 401,
+    message: "Invalid token",
   },
 };
 

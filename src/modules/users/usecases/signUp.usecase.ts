@@ -1,18 +1,18 @@
-import { CreateUserDTO } from "../@types/userDTO";
-import UserRepository from "../../../repositories/db/users/user.repository";
-import User from "../domain/user.entity";
+import UserRepository from "../repositories/user.repository";
+import User from "../entity/user.entity";
 import UserMapper from "../mappers/user.mapper";
 import UserError from "../errors/user.errors";
 import TokenService from "../../../providers/token/token.service";
 import HashService from "../../../providers/hash/hash.service";
 
-type createUserProps = {
+type SignUpProps = {
   name: string;
   email: string;
   password: string;
-  date_of_birth: string;
+  date_of_birth: Date;
   gender: string;
 };
+
 class SignUpUseCase {
   constructor(
     private readonly userRepository: UserRepository,
@@ -20,7 +20,7 @@ class SignUpUseCase {
     private readonly tokenService: TokenService
   ) {}
 
-  async execute(data: CreateUserDTO): Promise<string> {
+  async execute(data: SignUpProps): Promise<string> {
     const userAlreadyExists = await this.userRepository.findUser({
       email: data.email,
     });

@@ -34,8 +34,7 @@ class User {
   }
   public validateDateBitrh() {
     const { date_of_birth } = this.data;
-    const regex = /^\d{4}-\d{2}-\d{2}$/;
-    return regex.test(date_of_birth.toString());
+    if (date_of_birth > new Date()) return false;
   }
 
   public validadeUser = () => {

@@ -1,12 +1,13 @@
-import PrismaRepository from "../../../../../repositories/db/users/implementations/prisma.repository";
-import TokenServiceJWT from "../../../../../providers/token/implementations/tokenJWT.service";
-import HashServiceBcrypt from "../../../../../providers/hash/implementations/hashBcrypt.service";
-import { getUserResponseDTO } from "../../../@types/userDTO";
-import DeleteUserUseCase from "../../../usecases/deleteUser.usecase";
-import GetUserUseCase from "../../../usecases/getUser.usecase";
-import SigninUseCase from "../../../usecases/signIn.usecase";
-import SignUpUseCase from "../../../usecases/signUp.usecase";
-import UpdateUserUseCase from "../../../usecases/updateUser.usecase";
+import HashServiceBcrypt from "../../../../providers/hash/implementations/hashBcrypt.service";
+import TokenServiceJWT from "../../../../providers/token/implementations/tokenJWT.service";
+import { getUserResponseDTO } from "../../@types/userDTO";
+import PrismaRepository from "../../repositories/implementations/prisma.repository";
+import DeleteUserUseCase from "../../usecases/deleteUser.usecase";
+import GetAllUserUseCase from "../../usecases/getAllUser.usecase";
+import GetUserUseCase from "../../usecases/getUser.usecase";
+import SigninUseCase from "../../usecases/signIn.usecase";
+import SignUpUseCase from "../../usecases/signUp.usecase";
+import UpdateUserUseCase from "../../usecases/updateUser.usecase";
 import UserService from "../user.service";
 
 const userRepository = new PrismaRepository();
@@ -30,10 +31,17 @@ class UserDomainService implements UserService {
     hashServiceBcrypt,
     tokenServiceJWT
   );
+  private getAllUsersUseCase: GetAllUserUseCase = new GetAllUserUseCase(
+    userRepository
+  );
 
   async getUser(id: string): Promise<getUserResponseDTO> {
     const user = await this.getUserUseCase.execute(id);
     return user;
+  }
+  async getAllUsers() {
+    const users = await this.getAllUsersUseCase.execute();
+    return users;
   }
   async signIn(data: { email: string; password: string }) {
     const token = await this.signInUseCase.execute(data);
@@ -56,7 +64,8 @@ class UserDomainService implements UserService {
     name?: string;
     lastName?: string;
   }) {
-    await this.updateUserUseCase.execute(data);
+    const updateUser = await this.updateUserUseCase.execute(data);
+    return updateUser;
   }
   async deleteUser(id: string) {
     await this.deleteUserUseCase.execute(id);

@@ -1,9 +1,9 @@
 import UserError from "../errors/user.errors";
-import UserRepository from "../../../repositories/db/users/user.repository";
+import UserRepository from "../repositories/user.repository";
 import HashService from "../../../providers/hash/hash.service";
 import TokenService from "../../../providers/token/token.service";
 
-type SigninProps = {
+type SignInProps = {
   email: string;
   password: string;
 };
@@ -15,11 +15,11 @@ class SigninUseCase {
     private readonly tokenService: TokenService
   ) {}
 
-  async execute(data: SigninProps): Promise<string> {
+  async execute(data: SignInProps): Promise<string> {
     const user = await this.userRepository.findUser({ email: data.email });
 
     if (!user) {
-      throw new UserError("notFound");
+      throw new UserError("invalidCredentials");
     }
 
     const passwordMatch = this.hashService.compare(

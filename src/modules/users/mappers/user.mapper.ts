@@ -1,4 +1,4 @@
-import User, { userProps } from "../domain/user.entity";
+import User, { userProps } from "../entity/user.entity";
 
 type userPropsMapper = {
   id: string;
@@ -16,7 +16,7 @@ class UserMapper {
       email: user.data.email,
       password: user.data.password,
       gender: user.data.gender,
-      date_of_birth: new Date(user.data.date_of_birth),
+      date_of_birth: user.data.date_of_birth,
     };
   }
   static toDomain(data: userPropsMapper) {

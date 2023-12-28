@@ -1,13 +1,19 @@
-import { updateUserDTO } from "../@types/userDTO";
 import UserError from "../errors/user.errors";
 import UserMapper from "../mappers/user.mapper";
-import UserRepository from "../../../repositories/db/users/user.repository";
+import UserRepository from "../repositories/user.repository";
 
-type updatedUserProps = {
+type UpdateUserProps = {
   id: string;
   name?: string;
   email?: string;
   password?: string;
+};
+type UpdateUserResponse = {
+  id: string;
+  name: string;
+  email: string;
+  gender: string;
+  date_of_birth: Date;
 };
 
 export class UpdateUserUseCase {
@@ -15,8 +21,8 @@ export class UpdateUserUseCase {
   constructor(userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
-  async execute(data: updatedUserProps) {
-    const user = await this.userRepository.findUser({ email: data.id });
+  async execute(data: UpdateUserProps): Promise<UpdateUserResponse> {
+    const user = await this.userRepository.findUser({ id: data.id });
     if (!user) {
       throw new UserError("notFound");
     }
@@ -35,13 +41,22 @@ export class UpdateUserUseCase {
     if (data.password) {
       user.password = data.password;
     }
+
     const mappedUser = UserMapper.toDomain(user);
     mappedUser.validadeUser();
     const mappedUserToPersist = UserMapper.toPersist(mappedUser);
+
     const updatedUser = await this.userRepository.updateUser(
       mappedUserToPersist
     );
-    return updatedUser;
+    console.log(updatedUser);
+    return {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      gender: updatedUser.gender,
+      date_of_birth: updatedUser.date_of_birth,
+    };
   }
 }
 export default UpdateUserUseCase;

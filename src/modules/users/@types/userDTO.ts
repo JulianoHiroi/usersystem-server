@@ -1,13 +1,13 @@
-import { projectsProps } from "../domain/user.entity";
+import { projectsProps } from "../entity/user.entity";
 
-export type CreateUserDTO = {
+export type SignUpDTO = {
   name: string;
   email: string;
   password: string;
   date_of_birth: Date;
   gender: string;
 };
-export type SiginUserDTO = {
+export type SignInDTO = {
   email: string;
   password: string;
 };
@@ -30,4 +30,12 @@ export type updateUserDTO = {
 export type FindUserDTO = {
   id?: string;
   email?: string;
+};
+export type CreateUserDTO = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  date_of_birth: Date;
+  gender: string;
 };

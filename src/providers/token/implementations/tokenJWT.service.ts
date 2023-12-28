@@ -15,7 +15,12 @@ class TokenServiceJWT implements TokenService {
     if (!process.env.SECRET) {
       throw new TokenError("EmptySecret");
     }
-    const payload = jwt.verify(token, process.env.SECRET);
+    let payload;
+    try {
+      payload = jwt.verify(token, process.env.SECRET);
+    } catch (err) {
+      throw new TokenError("InvalidToken");
+    }
     return payload;
   }
 }
