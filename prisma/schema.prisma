@@ -21,17 +21,17 @@ model User {
 }
 
 model Project {
-  id   String        @id @default(uuid())
-  name String
-  role String
-  user UserProject[]
+  id          String        @id @default(uuid())
+  name        String
+  description String
+  user        UserProject[]
 }
 
 model UserProject {
   userId    String
-  autor     User    @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
   projectId String
-  livro     Project @relation(fields: [projectId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
   role      String
 
   @@id([userId, projectId])

@@ -1,51 +1,50 @@
 import { randomUUID } from "crypto";
 import UserError from "../errors/user.errors";
-
-export type projectsProps = { role: string; project: string }[];
+import Project from "../../projects/entity/project.entity";
 
 export type userProps = {
+  id?: string;
   name: string;
   email: string;
   password: string;
   gender: string;
   date_of_birth: Date;
-  projects?: projectsProps;
+  projects?: { project: Project; role: string }[];
 };
 class User {
   public readonly id: string;
-  data: userProps = {
-    name: "",
-    email: "",
-    password: "",
-    gender: "",
-    date_of_birth: new Date(),
-  };
-
-  constructor(data: userProps, id?: string) {
-    this.data = data;
-    if (data.projects) this.data.projects = data.projects;
-    this.id = id || randomUUID();
+  name: string;
+  email: string;
+  password: string;
+  gender: string;
+  date_of_birth: Date;
+  projects: { project: Project; role: string }[];
+  constructor(data: userProps) {
+    this.name = data.name;
+    this.email = data.email;
+    this.password = data.password;
+    this.date_of_birth = data.date_of_birth;
+    this.gender = data.gender;
+    this.projects = data.projects || [];
+    this.id = data.id || randomUUID();
   }
 
   public validateEmail() {
-    const { email } = this.data;
     const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    return regex.test(email);
+    return regex.test(this.email);
   }
   public validateDateBirth() {
-    const { date_of_birth } = this.data;
-    if (date_of_birth > new Date()) return false;
+    if (this.date_of_birth > new Date()) return false;
   }
 
   public validadeUser = () => {
-    const { name } = this.data;
-    if (!name) {
+    if (!this.name) {
       throw new UserError("emptyName");
     }
     if (!this.validateDateBirth) {
       throw new UserError("invalidDateBirth");
     }
-    if (!this.data.gender) {
+    if (!this.gender) {
       throw new UserError("emptyGender");
     }
     if (!this.validateEmail()) {

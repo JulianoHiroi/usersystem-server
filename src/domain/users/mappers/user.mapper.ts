@@ -12,24 +12,22 @@ class UserMapper {
   static toPersist(user: User) {
     return {
       id: user.id,
-      name: user.data.name,
-      email: user.data.email,
-      password: user.data.password,
-      gender: user.data.gender,
-      date_of_birth: user.data.date_of_birth,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      gender: user.gender,
+      date_of_birth: user.date_of_birth,
     };
   }
-  static toDomain(data: userPropsMapper) {
-    return new User(
-      {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        date_of_birth: data.date_of_birth,
-        gender: data.gender,
-      },
-      data.id
-    );
+  static toDomain(data: userProps) {
+    return new User({
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      date_of_birth: data.date_of_birth,
+      gender: data.gender,
+    });
   }
 }
 export default UserMapper;

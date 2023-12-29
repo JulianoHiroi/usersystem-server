@@ -1,10 +1,12 @@
 import "express-async-errors";
 import express, { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
+import userRoutes from "./infra/routes/user.routes";
+import projectRoutes from "./infra/routes/project.routes";
+
 const prisma = new PrismaClient();
 
-import { errorMiddleware } from "./polices/error/error.middleware";
-import router from "./routes";
+import { errorMiddleware } from "./infra/polices/error/error.middleware";
 
 prisma.$connect().then(() => {
   console.log("Connected to database");
@@ -14,8 +16,10 @@ prisma.$connect().then(() => {
   app.get("/api", (req, res) => {
     res.send("Hello World");
   });
+
+  app.use("/api/users", userRoutes);
+  app.use("/api/projects", projectRoutes);
   // Este middleware será chamado antes do middleware de erro
-  app.use(router);
   app.use(errorMiddleware);
   app.listen(3000, () => {
     console.log("Server is running on port 3000");

@@ -1,5 +1,9 @@
 import { User } from "@prisma/client";
-import { CreateUserDTO, FindUserDTO, updateUserDTO } from "../@types/userDTO";
+import {
+  CreateUserDTO,
+  FindUserDTO,
+  updateUserDTO,
+} from "../../domain/users/@types/userDTO";
 abstract class UserRepository {
   abstract findUser(findUserDTO: FindUserDTO): Promise<User | null>;
   abstract createUser(data: CreateUserDTO): Promise<User>;

@@ -1,5 +1,3 @@
-import { projectsProps } from "../entity/user.entity";
-
 export type SignUpDTO = {
   name: string;
   email: string;

@@ -1,11 +1,14 @@
-import { FindUserDTO, updateUserDTO } from "../../@types/userDTO";
+import {
+  FindUserDTO,
+  updateUserDTO,
+} from "../../../domain/users/@types/userDTO";
 import UserRepository from "../user.repository";
 
 import { PrismaClient, User } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-class PrismaRepository implements UserRepository {
+class UserPrismaRepository implements UserRepository {
   async createUser(data: User): Promise<User> {
     const user = await prisma.user.create({ data });
     return user;
@@ -47,4 +50,4 @@ class PrismaRepository implements UserRepository {
   }
 }
 
-export default PrismaRepository;
+export default UserPrismaRepository;
