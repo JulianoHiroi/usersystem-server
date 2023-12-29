@@ -32,7 +32,7 @@ class User {
     const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
     return regex.test(email);
   }
-  public validateDateBitrh() {
+  public validateDateBirth() {
     const { date_of_birth } = this.data;
     if (date_of_birth > new Date()) return false;
   }
@@ -42,7 +42,7 @@ class User {
     if (!name) {
       throw new UserError("emptyName");
     }
-    if (!this.validateDateBitrh) {
+    if (!this.validateDateBirth) {
       throw new UserError("invalidDateBirth");
     }
     if (!this.data.gender) {

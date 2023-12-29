@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthError } from "./auth.error";
 import TokenService from "../../providers/token/token.service";
-import UserRepository from "../../modules/users/repositories/user.repository";
+import UserRepository from "../../repositories/user.repository";
 
 type UserTokenPayload = {
   id: string;

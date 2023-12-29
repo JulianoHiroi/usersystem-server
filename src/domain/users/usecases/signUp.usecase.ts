@@ -1,10 +1,9 @@
-import UserRepository from "../repositories/user.repository";
+import UserRepository from "../../../infra/repositories/user.repository";
 import User from "../entity/user.entity";
 import UserMapper from "../mappers/user.mapper";
 import UserError from "../errors/user.errors";
-import TokenService from "../../../providers/token/token.service";
-import HashService from "../../../providers/hash/hash.service";
-
+import TokenService from "../../../infra/providers/token/token.service";
+import HashService from "../../../infra/providers/hash/hash.service";
 type SignUpProps = {
   name: string;
   email: string;

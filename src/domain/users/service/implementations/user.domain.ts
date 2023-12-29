@@ -1,7 +1,7 @@
-import HashServiceBcrypt from "../../../../providers/hash/implementations/hashBcrypt.service";
-import TokenServiceJWT from "../../../../providers/token/implementations/tokenJWT.service";
+import HashServiceBcryp from "../../../../infra/providers/hash/implementations/hashBcrypt.service";
+import TokenServiceJWT from "../../../../infra/providers/token/implementations/tokenJWT.service";
+import PrismaRepository from "../../../../infra/repositories/implementations/user.prisma.repository";
 import { getUserResponseDTO } from "../../@types/userDTO";
-import PrismaRepository from "../../repositories/implementations/prisma.repository";
 import DeleteUserUseCase from "../../usecases/deleteUser.usecase";
 import GetAllUserUseCase from "../../usecases/getAllUser.usecase";
 import GetUserUseCase from "../../usecases/getUser.usecase";
@@ -11,7 +11,7 @@ import UpdateUserUseCase from "../../usecases/updateUser.usecase";
 import UserService from "../user.service";
 
 const userRepository = new PrismaRepository();
-const hashServiceBcrypt = new HashServiceBcrypt();
+const hashServiceBcrypt = new HashServiceBcryp();
 const tokenServiceJWT = new TokenServiceJWT();
 class UserDomainService implements UserService {
   private getUserUseCase: GetUserUseCase = new GetUserUseCase(userRepository);

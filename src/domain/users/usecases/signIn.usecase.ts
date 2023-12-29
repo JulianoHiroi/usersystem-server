@@ -1,7 +1,7 @@
 import UserError from "../errors/user.errors";
-import UserRepository from "../repositories/user.repository";
-import HashService from "../../../providers/hash/hash.service";
-import TokenService from "../../../providers/token/token.service";
+import UserRepository from "../../../infra/repositories/user.repository";
+import TokenService from "../../../infra/providers/token/token.service";
+import HashService from "../../../infra/providers/hash/hash.service";
 
 type SignInProps = {
   email: string;

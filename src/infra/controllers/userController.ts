@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import UserService from "../modules/users/service/user.service";
+import UserService from "../../domain/users/service/user.service";
 
 class UserController {
   constructor(private readonly userService: UserService) {}

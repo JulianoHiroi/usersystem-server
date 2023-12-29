@@ -1,5 +1,5 @@
 import UserError from "../errors/user.errors";
-import UserRepository from "../repositories/user.repository";
+import UserRepository from "../../../infra/repositories/user.repository";
 
 class DeleteUserUseCase {
   private readonly userRepository: UserRepository;

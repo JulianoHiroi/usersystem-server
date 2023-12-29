@@ -1,5 +1,4 @@
-import User, { userProps } from "../entity/user.entity";
-import UserRepository from "../repositories/user.repository";
+import UserRepository from "../../../infra/repositories/user.repository";
 
 type GetAllUserResponse = {
   id: string;

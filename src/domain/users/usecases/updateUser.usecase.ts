@@ -1,6 +1,6 @@
 import UserError from "../errors/user.errors";
 import UserMapper from "../mappers/user.mapper";
-import UserRepository from "../repositories/user.repository";
+import UserRepository from "../../../infra/repositories/user.repository";
 
 type UpdateUserProps = {
   id: string;
