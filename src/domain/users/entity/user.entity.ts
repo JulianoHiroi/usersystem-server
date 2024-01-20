@@ -34,14 +34,24 @@ class User {
     return regex.test(this.email);
   }
   public validateDateBirth() {
-    if (this.date_of_birth > new Date()) return false;
-  }
+    // Obtém a data atual
+    const currentDate = new Date();
+    console.log(this.date_of_birth > currentDate)
+    // Compara a data de nascimento com a data atual
+    if (this.date_of_birth > currentDate) {
+        // A data de nascimento está no futuro, portanto, é inválida
+        return false;
+    } else {
+        // A data de nascimento é válida
+        return true;
+    }
+}
 
   public validadeUser = () => {
     if (!this.name) {
       throw new UserError("emptyName");
     }
-    if (!this.validateDateBirth) {
+    if (!this.validateDateBirth()) {
       throw new UserError("invalidDateBirth");
     }
     if (!this.gender) {

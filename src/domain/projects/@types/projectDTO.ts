@@ -18,6 +18,13 @@ export type connectUserToProjectDTO = {
   project_id: string;
   role: string;
 };
+
+export type GetProjectDTO = {
+  id: string;
+  name: string;
+  description: string;
+};
+
 export type GetProjectResponseDTO = {
   id: string;
   name: string;

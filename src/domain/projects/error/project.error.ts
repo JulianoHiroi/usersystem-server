@@ -1,8 +1,12 @@
-type nameProjectError = "notFound";
+type nameProjectError = "notFound" | "notOwner";
 const schemaProjectError = {
   notFound: {
     statusCode: 404,
     message: "Project not found",
+  },
+  notOwner: {
+    statusCode: 401,
+    message: "You are not the owner of this project",
   },
 };
 class ProjectError extends Error {

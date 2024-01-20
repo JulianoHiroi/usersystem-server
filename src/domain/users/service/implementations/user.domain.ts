@@ -1,6 +1,7 @@
 import HashServiceBcryp from "../../../../infra/providers/hash/implementations/hashBcrypt.service";
 import TokenServiceJWT from "../../../../infra/providers/token/implementations/tokenJWT.service";
 import PrismaRepository from "../../../../infra/repositories/implementations/user.prisma.repository";
+import ProjectPrismaRepository from "../../../../infra/repositories/implementations/project.prisma.repository";
 import { getUserResponseDTO } from "../../@types/userDTO";
 import DeleteUserUseCase from "../../usecases/deleteUser.usecase";
 import GetAllUserUseCase from "../../usecases/getAllUser.usecase";
@@ -8,14 +9,21 @@ import GetUserUseCase from "../../usecases/getUser.usecase";
 import SigninUseCase from "../../usecases/signIn.usecase";
 import SignUpUseCase from "../../usecases/signUp.usecase";
 import UpdateUserUseCase from "../../usecases/updateUser.usecase";
+import GetUserByEmailUseCase from "../../usecases/getUserByEmail.usecase";
+import GetAllProjectsByUserUseCase from "../../usecases/getAllProjectsByUser.usecase";
 import UserService from "../user.service";
 
 const userRepository = new PrismaRepository();
 const hashServiceBcrypt = new HashServiceBcryp();
 const tokenServiceJWT = new TokenServiceJWT();
+const projectRepository = new ProjectPrismaRepository();
+
 class UserDomainService implements UserService {
   private getUserUseCase: GetUserUseCase = new GetUserUseCase(userRepository);
   private updateUserUseCase: UpdateUserUseCase = new UpdateUserUseCase(
+    userRepository
+  );
+  private getUserByEmailUseCase: GetUserByEmailUseCase = new GetUserByEmailUseCase(
     userRepository
   );
   private deleteUserUseCase: DeleteUserUseCase = new DeleteUserUseCase(
@@ -34,7 +42,8 @@ class UserDomainService implements UserService {
   private getAllUsersUseCase: GetAllUserUseCase = new GetAllUserUseCase(
     userRepository
   );
-
+  private getAllProjectsByUserUseCase: GetAllProjectsByUserUseCase =
+    new GetAllProjectsByUserUseCase(projectRepository, userRepository);
   async getUser(id: string): Promise<getUserResponseDTO> {
     const user = await this.getUserUseCase.execute(id);
     return user;
@@ -43,6 +52,16 @@ class UserDomainService implements UserService {
     const users = await this.getAllUsersUseCase.execute();
     return users;
   }
+  async getAllProjectsByUser(id: string) {
+    const projects = await this.getAllProjectsByUserUseCase.execute(id);
+    return projects;
+  }
+
+  async getUserByEmail(email: string) {
+    const user = await this.getUserByEmailUseCase.execute(email);
+    return user;
+  }
+
   async signIn(data: { email: string; password: string }) {
     const token = await this.signInUseCase.execute(data);
     return token;
@@ -54,8 +73,8 @@ class UserDomainService implements UserService {
     gender: string;
     date_of_birth: Date;
   }) {
-    const token = await this.signUpUseCase.execute(data);
-    return token;
+    const response = await this.signUpUseCase.execute(data);
+    return response;
   }
   async updateUser(data: {
     id: string;

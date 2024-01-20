@@ -46,8 +46,8 @@ class ProjectServiceDomain implements ProjectService {
     const project = await this.updateProjectUseCase.execute(data);
     return project;
   }
-  async deleteProject(id: string): Promise<any> {
-    const project = await this.deleteProjectUseCase.execute(id);
+  async deleteProject(projectId: string, userId: string): Promise<any> {
+    const project = await this.deleteProjectUseCase.execute(projectId, userId);
     return project;
   }
 }

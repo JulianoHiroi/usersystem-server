@@ -5,10 +5,18 @@ export type SignUpDTO = {
   date_of_birth: Date;
   gender: string;
 };
+export type SignUpResponseDTO = {
+  token: string;
+  user: getUserResponseDTO;
+}
 export type SignInDTO = {
   email: string;
   password: string;
 };
+export type SignInResponseDTO = {
+  token: string;
+  user: getUserResponseDTO;
+}
 
 export type getUserResponseDTO = {
   id: string;

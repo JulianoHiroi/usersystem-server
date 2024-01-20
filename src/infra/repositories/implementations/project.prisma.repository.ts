@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import {
   CreateProjectDTO,
   CreateProjectResponseDTO,
+  GetProjectDTO,
   GetProjectResponseDTO,
   connectUserToProjectDTO,
 } from "../../../domain/projects/@types/projectDTO";
@@ -40,6 +41,19 @@ class ProjectPrismaRepository implements ProjectRepository {
       },
     });
     return;
+  }
+  async getAllByUser(userId: string): Promise<GetProjectDTO[]> {
+    const prisma = new PrismaClient();
+    const projects = await prisma.project.findMany({
+      where: {
+        user: {
+          some: {
+            userId: userId,
+          },
+        },
+      },
+    });
+    return projects;
   }
   async update(project: any): Promise<any> {
     const prisma = new PrismaClient();

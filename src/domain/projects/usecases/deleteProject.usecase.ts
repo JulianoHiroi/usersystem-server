@@ -4,9 +4,13 @@ import ProjectError from "../error/project.error";
 class DeleteProjectUseCase {
   constructor(private projectRepository: ProjectRepository) {}
 
-  async execute(projectId: string) {
+  async execute(projectId: string, userId: string) {
     const project = await this.projectRepository.findProject(projectId);
-
+    console.log(project);
+    const userIsOwner = project?.user.some(
+      (user) => user.user.id === userId && user.role === "owner"
+    );
+    if (!userIsOwner) throw new ProjectError("notOwner");
     if (!project) {
       throw new ProjectError("notFound");
     }

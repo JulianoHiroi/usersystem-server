@@ -4,6 +4,7 @@ import UserMapper from "../mappers/user.mapper";
 import UserError from "../errors/user.errors";
 import TokenService from "../../../infra/providers/token/token.service";
 import HashService from "../../../infra/providers/hash/hash.service";
+import { GetUserResponse } from "./getUser.usecase";
 type SignUpProps = {
   name: string;
   email: string;
@@ -11,7 +12,10 @@ type SignUpProps = {
   date_of_birth: Date;
   gender: string;
 };
-
+type SignupResponse = {
+  token: string;
+  user: GetUserResponse;
+}
 class SignUpUseCase {
   constructor(
     private readonly userRepository: UserRepository,
@@ -19,13 +23,17 @@ class SignUpUseCase {
     private readonly tokenService: TokenService
   ) {}
 
-  async execute(data: SignUpProps): Promise<string> {
+  async execute(data: SignUpProps): Promise<SignupResponse> {
     const userAlreadyExists = await this.userRepository.findUser({
       email: data.email,
     });
 
     if (userAlreadyExists) {
       throw new UserError("alreadyExists");
+    }
+    console.log(data.date_of_birth)
+    if(data.date_of_birth === undefined || data.date_of_birth === null){
+      throw new UserError("invalidDateBirth");
     }
     const regex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/;
@@ -37,9 +45,12 @@ class SignUpUseCase {
     const user = new User(data);
     user.validadeUser();
     const mappedUser = UserMapper.toPersist(user);
-    await this.userRepository.createUser(mappedUser);
+    const newUser = await this.userRepository.createUser(mappedUser);
     const token = this.tokenService.sign({ id: user.id }, { expiresIn: "1d" });
-    return token;
+    return {
+      token : token, 
+      user: newUser
+    }
   }
 }
 export default SignUpUseCase;

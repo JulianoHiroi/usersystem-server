@@ -7,7 +7,7 @@ type nameUserError =
   | "emptyGender"
   | "alreadyExists"
   | "invalidToken"
-  | "invalidCredentials";
+  | "invalidCredentials"
 
 const schemaError = {
   notFound: {
@@ -28,7 +28,7 @@ const schemaError = {
   },
   invalidDateBirth: {
     statusCode: 400,
-    message: "Invalid date of birth or date of birth is required",
+    message: "Invalid date of birth",
   },
   emptyGender: {
     statusCode: 400,

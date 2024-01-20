@@ -6,7 +6,9 @@ import UserRepository from "../../repositories/user.repository";
 type UserTokenPayload = {
   id: string;
 };
-
+export interface AuthRequest extends Request {
+  userId?: string;
+}
 export class AuthMiddleware {
   constructor(
     private readonly tokenService: TokenService,
@@ -36,10 +38,12 @@ export class AuthMiddleware {
     if (!tokenIsValid.id) throw new AuthError("invalidToken");
     return tokenIsValid.id;
   }
-  async auth(req: Request, res: Response, next: NextFunction) {
+  async auth(req: AuthRequest, res: Response, next: NextFunction) {
     const userId: string = this.getToken(req);
     const user = await this.userRepository.findUser({ id: userId });
     if (!user) throw new AuthError("Unauthorized");
+    req.userId = userId;
+
     return next();
   }
 }
