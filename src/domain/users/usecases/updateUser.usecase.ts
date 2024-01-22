@@ -49,7 +49,6 @@ export class UpdateUserUseCase {
     const updatedUser = await this.userRepository.updateUser(
       mappedUserToPersist
     );
-    console.log(updatedUser);
     return {
       id: updatedUser.id,
       name: updatedUser.name,

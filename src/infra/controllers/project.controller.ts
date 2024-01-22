@@ -36,5 +36,12 @@ class ProjectController {
     await this.projectService.deleteProject(id, userId);
     res.status(200).json({ message: "Project deleted" });
   }
+  async connectUserToProject(req: AuthRequest, res: Response) {
+    const { projectId } = req.params;
+    const userId = req.userId;
+    if (!userId) throw new Error("invalidToken");
+    await this.projectService.connectUserToProject(userId, projectId);
+    res.status(200).json({ message: "User connected to project" });
+  }
 }
 export default ProjectController;

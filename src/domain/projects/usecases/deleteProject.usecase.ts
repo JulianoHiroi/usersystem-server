@@ -6,7 +6,6 @@ class DeleteProjectUseCase {
 
   async execute(projectId: string, userId: string) {
     const project = await this.projectRepository.findProject(projectId);
-    console.log(project);
     const userIsOwner = project?.user.some(
       (user) => user.user.id === userId && user.role === "owner"
     );

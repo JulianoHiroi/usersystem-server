@@ -7,9 +7,12 @@ import {
   connectUserToProjectDTO,
 } from "../../../domain/projects/@types/projectDTO";
 import ProjectRepository from "../project.repository";
+const prisma = new PrismaClient();
 class ProjectPrismaRepository implements ProjectRepository {
+
+  
+
   async findProject(id: string): Promise<GetProjectResponseDTO | null> {
-    const prisma = new PrismaClient();
     const project = await prisma.project.findUnique({
       where: {
         id: id,
@@ -26,13 +29,10 @@ class ProjectPrismaRepository implements ProjectRepository {
     return project;
   }
   async create(project: CreateProjectDTO): Promise<CreateProjectResponseDTO> {
-    const prisma = new PrismaClient();
     const newProject = await prisma.project.create({ data: project });
     return newProject;
   }
   async connectUserToProject(data: connectUserToProjectDTO): Promise<void> {
-    const prisma = new PrismaClient();
-
     const project = await prisma.userProject.create({
       data: {
         userId: data.user_id,
@@ -43,7 +43,6 @@ class ProjectPrismaRepository implements ProjectRepository {
     return;
   }
   async getAllByUser(userId: string): Promise<GetProjectDTO[]> {
-    const prisma = new PrismaClient();
     const projects = await prisma.project.findMany({
       where: {
         user: {
@@ -56,7 +55,6 @@ class ProjectPrismaRepository implements ProjectRepository {
     return projects;
   }
   async update(project: any): Promise<any> {
-    const prisma = new PrismaClient();
     const updateProject = await prisma.project.update({
       where: {
         id: project.id,
@@ -69,7 +67,6 @@ class ProjectPrismaRepository implements ProjectRepository {
     return updateProject;
   }
   async delete(id: string): Promise<void> {
-    const prisma = new PrismaClient();
     await prisma.userProject.deleteMany({
       where: {
         projectId: id,

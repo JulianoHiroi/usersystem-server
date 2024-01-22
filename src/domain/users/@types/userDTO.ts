@@ -8,7 +8,7 @@ export type SignUpDTO = {
 export type SignUpResponseDTO = {
   token: string;
   user: getUserResponseDTO;
-}
+};
 export type SignInDTO = {
   email: string;
   password: string;
@@ -16,7 +16,7 @@ export type SignInDTO = {
 export type SignInResponseDTO = {
   token: string;
   user: getUserResponseDTO;
-}
+};
 
 export type getUserResponseDTO = {
   id: string;
@@ -44,4 +44,8 @@ export type CreateUserDTO = {
   password: string;
   date_of_birth: Date;
   gender: string;
+};
+export type changePasswordDTO = {
+  token: string;
+  password: string;
 };

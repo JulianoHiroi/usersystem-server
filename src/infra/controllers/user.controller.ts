@@ -31,7 +31,6 @@ class UserController {
 
   async signIn(request: Request, response: Response) {
     const { email, password } = request.body;
-    console.log(request.body);
     const token = await this.userService.signIn({ email, password });
     return response.status(200).json(token);
   }
@@ -64,8 +63,18 @@ class UserController {
   }
   async deleteUser(request: Request, response: Response) {
     const { id } = request.params;
-    console.log(this.userService);
+
     await this.userService.deleteUser(id);
+    return response.status(204).json();
+  }
+  async recoveryPassword(request: Request, response: Response) {
+    const { email } = request.body;
+    await this.userService.recoveryPassword(email);
+    return response.status(204).json();
+  }
+  async changePassword(request: Request, response: Response) {
+    const { token, password } = request.body;
+    await this.userService.changePassword({ token, password });
     return response.status(204).json();
   }
 }

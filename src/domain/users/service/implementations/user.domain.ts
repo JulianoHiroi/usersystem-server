@@ -12,20 +12,23 @@ import UpdateUserUseCase from "../../usecases/updateUser.usecase";
 import GetUserByEmailUseCase from "../../usecases/getUserByEmail.usecase";
 import GetAllProjectsByUserUseCase from "../../usecases/getAllProjectsByUser.usecase";
 import UserService from "../user.service";
+import RecoveryPasswordUseCase from "../../usecases/recoveryPassword.usecase";
+import { NodeMailerMailService } from "../../../../infra/providers/email/implementations/nodemailer.service";
+import ChangePasswordUseCase from "../../usecases/changePassword.usecase";
 
 const userRepository = new PrismaRepository();
 const hashServiceBcrypt = new HashServiceBcryp();
 const tokenServiceJWT = new TokenServiceJWT();
 const projectRepository = new ProjectPrismaRepository();
+const emailService = new NodeMailerMailService();
 
 class UserDomainService implements UserService {
   private getUserUseCase: GetUserUseCase = new GetUserUseCase(userRepository);
   private updateUserUseCase: UpdateUserUseCase = new UpdateUserUseCase(
     userRepository
   );
-  private getUserByEmailUseCase: GetUserByEmailUseCase = new GetUserByEmailUseCase(
-    userRepository
-  );
+  private getUserByEmailUseCase: GetUserByEmailUseCase =
+    new GetUserByEmailUseCase(userRepository);
   private deleteUserUseCase: DeleteUserUseCase = new DeleteUserUseCase(
     userRepository
   );
@@ -44,10 +47,22 @@ class UserDomainService implements UserService {
   );
   private getAllProjectsByUserUseCase: GetAllProjectsByUserUseCase =
     new GetAllProjectsByUserUseCase(projectRepository, userRepository);
+
+  private recoveryPasswordUseCase: RecoveryPasswordUseCase =
+    new RecoveryPasswordUseCase(userRepository, emailService, tokenServiceJWT);
+
+  private changePasswordUseCase: ChangePasswordUseCase =
+    new ChangePasswordUseCase(
+      userRepository,
+      tokenServiceJWT,
+      hashServiceBcrypt
+    );
+
   async getUser(id: string): Promise<getUserResponseDTO> {
     const user = await this.getUserUseCase.execute(id);
     return user;
   }
+
   async getAllUsers() {
     const users = await this.getAllUsersUseCase.execute();
     return users;
@@ -88,6 +103,12 @@ class UserDomainService implements UserService {
   }
   async deleteUser(id: string) {
     await this.deleteUserUseCase.execute(id);
+  }
+  async recoveryPassword(email: string) {
+    await this.recoveryPasswordUseCase.execute(email);
+  }
+  async changePassword(data: { token: string; password: string }) {
+    await this.changePasswordUseCase.execute(data);
   }
 }
 export default UserDomainService;

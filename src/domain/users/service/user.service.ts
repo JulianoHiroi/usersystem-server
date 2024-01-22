@@ -6,6 +6,7 @@ import {
   updateUserDTO,
   SignInResponseDTO,
   SignUpResponseDTO,
+  changePasswordDTO,
 } from "../@types/userDTO";
 
 abstract class UserService {
@@ -17,6 +18,8 @@ abstract class UserService {
   abstract getAllUsers(): Promise<getUserResponseDTO[]>;
   abstract getAllProjectsByUser(id: string): Promise<GetProjectDTO[]>;
   abstract getUserByEmail(email: string): Promise<getUserResponseDTO>;
+  abstract recoveryPassword(email: string): Promise<void>;
+  abstract changePassword(data: changePasswordDTO): Promise<void>;
 }
 
 export default UserService;

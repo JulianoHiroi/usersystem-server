@@ -36,7 +36,6 @@ class User {
   public validateDateBirth() {
     // Obtém a data atual
     const currentDate = new Date();
-    console.log(this.date_of_birth > currentDate)
     // Compara a data de nascimento com a data atual
     if (this.date_of_birth > currentDate) {
         // A data de nascimento está no futuro, portanto, é inválida

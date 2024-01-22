@@ -1,4 +1,5 @@
 import UserRepository from "../../../infra/repositories/user.repository";
+import { NodeMailerMailService } from "../../../infra/providers/email/implementations/nodemailer.service";
 
 type GetAllUserResponse = {
   id: string;
@@ -9,7 +10,7 @@ type GetAllUserResponse = {
 }[];
 class GetAllUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
-
+  
   async execute(): Promise<GetAllUserResponse> {
     const users = await this.userRepository.findAll();
     const allUsers = users.map((user) => {

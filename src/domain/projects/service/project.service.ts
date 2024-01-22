@@ -18,5 +18,6 @@ abstract class ProjectService {
     data: updateProjectDTO
   ): Promise<updateProjectResponseDTO>;
   abstract deleteProject(projectId: string, userId: string): Promise<void>;
+  abstract connectUserToProject(userId: string, projectId: string): Promise<void>;
 }
 export default ProjectService;

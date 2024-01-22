@@ -28,5 +28,9 @@ projectRoutes.delete(
   authMiddleware.auth.bind(authMiddleware),
   projectController.deleteProject.bind(projectController)
 );
-
+projectRoutes.patch(
+  "/invite/:projectId",
+  authMiddleware.auth.bind(authMiddleware),
+  projectController.connectUserToProject.bind(projectController)
+);
 export default projectRoutes;

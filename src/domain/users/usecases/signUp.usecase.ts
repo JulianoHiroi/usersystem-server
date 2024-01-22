@@ -31,7 +31,6 @@ class SignUpUseCase {
     if (userAlreadyExists) {
       throw new UserError("alreadyExists");
     }
-    console.log(data.date_of_birth)
     if(data.date_of_birth === undefined || data.date_of_birth === null){
       throw new UserError("invalidDateBirth");
     }

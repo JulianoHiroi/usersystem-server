@@ -12,6 +12,7 @@ import {
   updateProjectDTO,
   updateProjectResponseDTO,
 } from "../../@types/projectDTO";
+import ConnectUserToProjectUseCase from "../../usecases/connectUserToProject";
 
 class ProjectServiceDomain implements ProjectService {
   projectPrismaRepository = new ProjectPrismaRepository();
@@ -23,6 +24,10 @@ class ProjectServiceDomain implements ProjectService {
   updateProjectUseCase = new UpdateProjectUseCase(this.projectPrismaRepository);
   deleteProjectUseCase = new DeleteProjectUseCase(this.projectPrismaRepository);
   getProjectUseCase = new GetProjectUseCase(this.projectPrismaRepository);
+  connectUserToProjectUseCase = new ConnectUserToProjectUseCase(
+    this.userPrismaRepository,
+    this.projectPrismaRepository
+  );
 
   constructor() {}
 
@@ -49,6 +54,9 @@ class ProjectServiceDomain implements ProjectService {
   async deleteProject(projectId: string, userId: string): Promise<any> {
     const project = await this.deleteProjectUseCase.execute(projectId, userId);
     return project;
+  }
+  async connectUserToProject(userId: string, projectId: string): Promise<void> {
+    await this.connectUserToProjectUseCase.execute(userId, projectId);
   }
 }
 export default ProjectServiceDomain;

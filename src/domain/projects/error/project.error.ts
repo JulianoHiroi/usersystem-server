@@ -1,4 +1,4 @@
-type nameProjectError = "notFound" | "notOwner";
+type nameProjectError = "notFound" | "notOwner" | "userAlreadyConnected" | "invalidParams";
 const schemaProjectError = {
   notFound: {
     statusCode: 404,
@@ -8,6 +8,14 @@ const schemaProjectError = {
     statusCode: 401,
     message: "You are not the owner of this project",
   },
+  userAlreadyConnected: {
+    statusCode: 400,
+    message: "User already connected to this project",
+  }, 
+  invalidParams: {
+    statusCode: 400,
+    message: "Invalid params",
+  }
 };
 class ProjectError extends Error {
   public readonly nameError: nameProjectError;
