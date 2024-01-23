@@ -34,6 +34,8 @@ userRoutes.patch(
   userController.changePassword.bind(userController)
 );
 userRoutes.patch("/:id", userController.updateUser.bind(userController));
-userRoutes.delete("/:id", userController.deleteUser.bind(userController));
+userRoutes.delete("/", 
+authMiddleware.auth.bind(authMiddleware),
+userController.deleteUser.bind(userController));
 
 export default userRoutes;

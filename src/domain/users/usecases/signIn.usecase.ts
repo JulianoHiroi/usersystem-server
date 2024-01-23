@@ -45,6 +45,7 @@ class SigninUseCase {
         date_of_birth: user.date_of_birth,
       }
     }
+    
     return response;
   }
 }

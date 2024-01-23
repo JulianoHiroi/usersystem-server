@@ -48,7 +48,13 @@ class SignUpUseCase {
     const token = this.tokenService.sign({ id: user.id }, { expiresIn: "1d" });
     return {
       token : token, 
-      user: newUser
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        gender: user.gender,
+        date_of_birth: user.date_of_birth,
+      }
     }
   }
 }

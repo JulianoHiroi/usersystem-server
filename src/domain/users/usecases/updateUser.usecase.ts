@@ -29,9 +29,9 @@ export class UpdateUserUseCase {
     if (data.name) {
       user.name = data.name;
     }
-    if (data.email) {
+    if (data.email && data.email !== user.email) {
       const userAlreadyExists = await this.userRepository.findUser({
-        email: data.id,
+        email: data.email,
       });
       if (userAlreadyExists) {
         throw new UserError("alreadyExists");
@@ -41,7 +41,6 @@ export class UpdateUserUseCase {
     if (data.password) {
       user.password = data.password;
     }
-
     const mappedUser = UserMapper.toDomain(user);
     mappedUser.validadeUser();
     const mappedUserToPersist = UserMapper.toPersist(mappedUser);

@@ -29,11 +29,35 @@ class UserPrismaRepository implements UserRepository {
     return user;
   }
   async deleteUser(id: string): Promise<void> {
-    await prisma.user.delete({
+    const projects = await prisma.userProject.findMany({
       where: {
-        id,
+        userId: id,
+        role: "owner"
       },
     });
+    await prisma.userProject.deleteMany({
+      where: {
+        userId: id,
+        role: "owner"
+      },
+    });
+    if(projects && projects.length > 0){
+      projects.forEach(async (project) => {
+        await prisma.project.delete({
+          where: {
+            id: project.projectId,
+          },
+        });
+      });
+    } 
+    await prisma.userProject.deleteMany({
+      where: {
+        userId: id,
+        role: "owner",
+      },
+    });
+    
+    
   }
   async updateUser(data: updateUserDTO): Promise<User> {
     const user = await prisma.user.update({

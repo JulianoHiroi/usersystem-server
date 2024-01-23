@@ -61,10 +61,10 @@ class UserController {
     });
     return response.status(200).json(updateUser);
   }
-  async deleteUser(request: Request, response: Response) {
-    const { id } = request.params;
-
-    await this.userService.deleteUser(id);
+  async deleteUser(request: AuthRequest, response: Response) {
+    const  userId  = request.userId;
+    if(userId === undefined) throw new UserError("invalidToken");
+    await this.userService.deleteUser(userId);
     return response.status(204).json();
   }
   async recoveryPassword(request: Request, response: Response) {
