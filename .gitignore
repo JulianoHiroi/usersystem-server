@@ -5,3 +5,5 @@ packge-lock.json
 yarn.lock
 
 .env
+
+dist
