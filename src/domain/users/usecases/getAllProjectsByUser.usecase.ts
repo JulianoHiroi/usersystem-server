@@ -6,7 +6,15 @@ type GetAllProjectsResponse = {
   id: string;
   name: string;
   description: string;
-}[];
+  user: {
+    user: {
+      id: string;
+      name: string;
+      email: string;
+    };
+    role: string;
+  }[];
+}
 
 class GetAllProjectsByUserUseCase {
   constructor(
@@ -14,10 +22,11 @@ class GetAllProjectsByUserUseCase {
     private readonly userRepository: UserRepository
   ) {}
 
-  async execute(userId: string): Promise<GetAllProjectsResponse> {
+  async execute(userId: string): Promise<GetAllProjectsResponse[]> {
     const userExists = await this.userRepository.findUser({ id: userId });
     if (!userExists) throw new UserError("notFound");
-    return this.projectRepository.getAllByUser(userId);
+    const response = await this.projectRepository.getAllByUser(userId);
+    return response;
   }
 }
 

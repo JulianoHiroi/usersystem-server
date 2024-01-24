@@ -51,6 +51,20 @@ class ProjectPrismaRepository implements ProjectRepository {
           },
         },
       },
+      include: {
+        user: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                email: true,
+              },
+            },
+            role: true,
+          },
+        },
+      },
     });
     return projects;
   }

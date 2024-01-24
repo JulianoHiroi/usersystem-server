@@ -23,6 +23,14 @@ export type GetProjectDTO = {
   id: string;
   name: string;
   description: string;
+  user: {
+    user: {
+      id: string;
+      name: string;
+      email: string;
+    };
+    role: string;
+  }[];
 };
 
 export type GetProjectResponseDTO = {
