@@ -22,17 +22,17 @@ class RecoveryPasswordUseCase {
     }
     const token = this.tokenService.sign({ id: user.id }, { expiresIn: "1d" });
 
-    const recoveryLink = `localhost:3000/recoverypassword/${token}`;
+    const recoveryLink = `https://usersystem-web-app-p2bi.vercel.app/recoverypassword/${token}`;
 
     this.emailService.sendEmail({
       to: user.email,
-      subject: "Recuperação de senha",
+      subject: "Recuperação de senha - UserSystem",
       html: ` <h2>Recuperação de senha</h2>
       <p>
-        Você está recebendo este email porque utilizou a opção para recuperar a sua senha do USerSystem. Se você não solicitou uma alteração de senha, ignore este email.
+        Você está recebendo este email porque utilizou a opção para recuperar a sua senha do UserSystem. Se você não solicitou uma alteração de senha, ignore este email.
         <br />
         <br />
-        Clique <a href=${`http://localhost:3000/recovery-password/${token}`}>aqui</a> para alterar a sua senha.
+        Clique <a href=${recoveryLink}>aqui</a> para alterar a sua senha.
       </p>`,
     });
   }
