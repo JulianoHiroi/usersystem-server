@@ -22,7 +22,7 @@ class RecoveryPasswordUseCase {
     }
     const token = this.tokenService.sign({ id: user.id }, { expiresIn: "1d" });
 
-    const recoveryLink = `https://usersystem-web-app-p2bi.vercel.app/recoverypassword/${token}`;
+    const recoveryLink = `https://usersystem-web-app-p2bi.vercel.app/recovery-password/${token}`;
 
     this.emailService.sendEmail({
       to: user.email,
