@@ -3,7 +3,7 @@ import UserService from "../../domain/users/service/user.service";
 import UserError from "../../domain/users/errors/user.errors";
 import { AuthRequest } from "../polices/auth/auth.middleware";
 class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   async getUser(request: Request, response: Response) {
     const { id } = request.params;
@@ -62,8 +62,8 @@ class UserController {
     return response.status(200).json(updateUser);
   }
   async deleteUser(request: AuthRequest, response: Response) {
-    const  userId  = request.userId;
-    if(userId === undefined) throw new UserError("invalidToken");
+    const userId = request.userId;
+    if (userId === undefined) throw new UserError("invalidToken");
     await this.userService.deleteUser(userId);
     return response.status(204).json();
   }
@@ -76,6 +76,12 @@ class UserController {
     const { token, password } = request.body;
     await this.userService.changePassword({ token, password });
     return response.status(204).json();
+  }
+
+  async verifyToken(request: AuthRequest, response: Response) {
+    const userId = request.userId;
+    if (userId === undefined) throw new UserError("invalidToken");
+    return response.status(200).json({ userId });
   }
 }
 export default UserController;

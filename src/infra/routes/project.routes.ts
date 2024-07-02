@@ -19,10 +19,7 @@ projectRoutes.post(
   authMiddleware.auth.bind(authMiddleware),
   projectController.createProject.bind(projectController)
 );
-projectRoutes.patch(
-  "/:id",
-  projectController.updateProject.bind(projectController)
-);
+
 projectRoutes.delete(
   "/:id",
   authMiddleware.auth.bind(authMiddleware),
@@ -33,4 +30,12 @@ projectRoutes.patch(
   authMiddleware.auth.bind(authMiddleware),
   projectController.connectUserToProject.bind(projectController)
 );
+/*
+projectRoutes.patch(
+  "/:id",
+  projectController.updateProject.bind(projectController)
+);
+
+*/
+
 export default projectRoutes;
